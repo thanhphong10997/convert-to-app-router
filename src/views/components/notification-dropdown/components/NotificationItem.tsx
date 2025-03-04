@@ -10,7 +10,7 @@ import { AppDispatch } from 'src/stores'
 import { deleteNotificationAsync, markReadNotificationAsync } from 'src/stores/notification/actions'
 import { formatDate } from 'src/utils/date'
 import { CONTEXT_NOTIFICATION } from 'src/configs/notification'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { ROUTE_CONFIG } from 'src/configs/route'
 
 type TProps = {

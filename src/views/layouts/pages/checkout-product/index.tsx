@@ -39,7 +39,7 @@ import { createOrderProductAsync } from 'src/stores/order-product/actions'
 
 // components
 import NoData from 'src/components/no-data'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 // services
 import { getAllPaymentTypes } from 'src/services/payment-type'

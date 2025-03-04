@@ -2,7 +2,7 @@
 
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Box, Button, Card, Typography, useTheme } from '@mui/material'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Spinner from 'src/components/spinner'

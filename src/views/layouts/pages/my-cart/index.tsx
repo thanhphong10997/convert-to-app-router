@@ -42,7 +42,7 @@ import { updateProductToCart } from 'src/stores/order-product'
 // helpers
 import { getLocalProductCart, setLocalProductToCart } from 'src/helpers/storage'
 import NoData from 'src/components/no-data'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { ROUTE_CONFIG } from 'src/configs/route'
 import ItemCartProduct from './components/ItemCartProduct'
 import { isFulfilled } from '@reduxjs/toolkit'

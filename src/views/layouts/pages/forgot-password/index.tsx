@@ -35,7 +35,7 @@ import { useTranslation } from 'react-i18next'
 
 import FallbackSpinner from 'src/components/fall-back'
 import { ROUTE_CONFIG } from 'src/configs/route'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { AppDispatch, RootState } from 'src/stores'
 import { useDispatch, useSelector } from 'react-redux'
 import { forgotPasswordAuthAsync } from 'src/stores/auth/actions'

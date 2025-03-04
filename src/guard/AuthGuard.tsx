@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // ** React Imports
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { ReactNode, ReactElement, useEffect } from 'react'
 import { API_ENDPOINT } from 'src/configs/api'
 import { ACCESS_TOKEN, USER_DATA } from 'src/configs/auth'

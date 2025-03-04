@@ -1,6 +1,6 @@
 import React from 'react'
-import initTranslations from '~/configs/i18n'
-import TranslationProvider from '~/app/[locale]/TranslationProvider'
+import initTranslations from 'src/configs/i18n'
+import TranslationProvider from 'src/app/[locale]/TranslationProvider'
 
 const i18nNamespaces = ['translation']
 

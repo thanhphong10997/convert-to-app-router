@@ -4,7 +4,7 @@
 import { createContext, useEffect, useState, ReactNode } from 'react'
 
 // ** Next Import
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 // ** Axios
 import axios from 'axios'

@@ -42,7 +42,7 @@ import NoData from 'src/components/no-data'
 import CustomSelect from 'src/components/custom-select'
 import SkeletonCard from '../product/components/SkeletonCard'
 import ChatBotAI from 'src/components/chatbot-ai'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 interface TOptions {
   label: string

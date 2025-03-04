@@ -6,7 +6,7 @@ import { TPopularProduct } from '..'
 import Image from 'next/image'
 import { formatNumberToLocal } from 'src/utils'
 import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { ROUTE_CONFIG } from 'src/configs/route'
 
 type TProps = {

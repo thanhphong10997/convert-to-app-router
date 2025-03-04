@@ -25,7 +25,7 @@ import { hexToRGBA } from 'src/utils/hex-to-rgba'
 import { formatNumberToLocal, isExpiry } from 'src/utils'
 
 // next
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 // configs
 import { ROUTE_CONFIG } from 'src/configs/route'

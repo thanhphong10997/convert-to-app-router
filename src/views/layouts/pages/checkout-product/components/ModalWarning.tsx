@@ -3,7 +3,7 @@
 // Import Mui
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Box, Button, Typography, useTheme } from '@mui/material'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 // Import React
 import React, { useEffect, useState } from 'react'

@@ -3,7 +3,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePathname, useRouter } from 'next/navigation'
-import i18nConfig from '~/app/i18nConfig'
+import i18nConfig from 'src/app/i18nConfig'
 
 export default function Home() {
   const { t, i18n } = useTranslation()

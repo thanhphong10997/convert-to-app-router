@@ -27,7 +27,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { useTranslation } from 'react-i18next'
 
 // router
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 // Component
 import { ROUTE_CONFIG } from 'src/configs/route'

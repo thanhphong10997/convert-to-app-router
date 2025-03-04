@@ -3,7 +3,7 @@
 // Import Next
 import { NextPage } from 'next'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 // Import components
 import Spinner from 'src/components/spinner'

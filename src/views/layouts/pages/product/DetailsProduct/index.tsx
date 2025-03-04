@@ -32,7 +32,7 @@ import {
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
 
 // router
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 // types
 import { TProduct } from 'src/types/product'

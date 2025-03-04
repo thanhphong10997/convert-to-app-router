@@ -17,7 +17,7 @@ import {
 // jwt
 import { jwtDecode } from 'jwt-decode'
 import { FC, useEffect } from 'react'
-import { NextRouter, useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/navigation'
 import { UserDataType } from 'src/contexts/types'
 import { useAuth } from 'src/hooks/useAuth'
 

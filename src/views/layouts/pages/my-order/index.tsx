@@ -2,7 +2,7 @@
 
 // Import Next
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 // Import Mui
 import { Box, useTheme, Tab, styled, Tabs, TabsProps } from '@mui/material'
