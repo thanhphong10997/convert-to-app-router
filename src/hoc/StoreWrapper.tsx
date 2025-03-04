@@ -44,22 +44,22 @@ export const StoreWrapper = ({ children }: { children: ReactNode }) => {
         <ReactQueryDevtools initialIsOpen={false} buttonPosition='bottom-left' />
         <AuthProvider>
           <AxiosInterceptor>
-            {/* <SessionProvider session={session}> */}
-            <SettingsProvider>
-              <SettingsConsumer>
-                {({ settings }) => {
-                  return (
-                    <ThemeComponent settings={settings}>
-                      {children}
-                      <ReactHotToast>
-                        <Toaster position={settings.toastPosition} toastOptions={toastOptions} />
-                      </ReactHotToast>
-                    </ThemeComponent>
-                  )
-                }}
-              </SettingsConsumer>
-            </SettingsProvider>
-            {/* </SessionProvider> */}
+            <SessionProvider>
+              <SettingsProvider>
+                <SettingsConsumer>
+                  {({ settings }) => {
+                    return (
+                      <ThemeComponent settings={settings}>
+                        {children}
+                        <ReactHotToast>
+                          <Toaster position={settings.toastPosition} toastOptions={toastOptions} />
+                        </ReactHotToast>
+                      </ThemeComponent>
+                    )
+                  }}
+                </SettingsConsumer>
+              </SettingsProvider>
+            </SessionProvider>
           </AxiosInterceptor>
         </AuthProvider>
       </QueryClientProvider>

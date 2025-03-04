@@ -41,3 +41,14 @@ export default async function initTranslations(
     t: i18nInstance.t
   }
 }
+
+export const LANGUAGE_OPTIONS = [
+  {
+    lang: 'English',
+    value: 'en'
+  },
+  {
+    lang: 'Tiếng Việt',
+    value: 'vi'
+  }
+]
