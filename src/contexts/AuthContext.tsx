@@ -4,7 +4,7 @@
 import { createContext, useEffect, useState, ReactNode } from 'react'
 
 // ** Next Import
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 // ** Axios
 import axios from 'axios'
@@ -63,6 +63,7 @@ const AuthProvider = ({ children }: Props) => {
 
   // ** Hooks
   const router = useRouter()
+  const pathName = usePathname()
 
   // redux
   const dispatch: AppDispatch = useDispatch()
@@ -87,7 +88,7 @@ const AuthProvider = ({ children }: Props) => {
             clearLocalUserData()
             setUser(null)
             setLoading(false)
-            if (!router.pathname.includes('login')) {
+            if (!pathName.includes('login')) {
               router.replace('/login')
             }
           })
@@ -110,7 +111,8 @@ const AuthProvider = ({ children }: Props) => {
         } else {
           setTemporaryToken(response?.data?.access_token)
         }
-        const returnUrl = router.query.returnUrl
+        // const returnUrl = router.query.returnUrl
+        const returnUrl = '/'
 
         setUser({ ...response.data.user })
         toast.success(t('login_success'))
@@ -136,7 +138,8 @@ const AuthProvider = ({ children }: Props) => {
         } else {
           setTemporaryToken(response?.data?.access_token)
         }
-        const returnUrl = router.query.returnUrl
+        // const returnUrl = router.query.returnUrl
+        const returnUrl = '/'
 
         setUser({ ...response.data.user })
         toast.success(t('login_success'))
@@ -162,7 +165,8 @@ const AuthProvider = ({ children }: Props) => {
         } else {
           setTemporaryToken(response?.data?.access_token)
         }
-        const returnUrl = router.query.returnUrl
+        // const returnUrl = router.query.returnUrl
+        const returnUrl = '/'
 
         setUser({ ...response.data.user })
         toast.success(t('login_success'))
@@ -188,12 +192,13 @@ const AuthProvider = ({ children }: Props) => {
       // signOut()
 
       // check if the page is not public then redirect to the login page
-      if (!LIST_PAGE_PUBLIC?.some(item => router?.asPath?.startsWith(item))) {
-        if (router.asPath !== '/') {
-          router.replace({
-            pathname: ROUTE_CONFIG.LOGIN,
-            query: { returnUrl: router.asPath }
-          })
+      if (!LIST_PAGE_PUBLIC?.some(item => pathName?.startsWith(item))) {
+        if (pathName !== '/') {
+          router.replace(ROUTE_CONFIG.LOGIN)
+          // router.replace({
+          //   pathname: ROUTE_CONFIG.LOGIN,
+          //   query: { returnUrl: router.asPath }
+          // })
         } else {
           router.replace(ROUTE_CONFIG.LOGIN)
         }

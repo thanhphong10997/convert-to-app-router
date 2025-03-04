@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // ** React Imports
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode, ReactElement, useEffect } from 'react'
 import { API_ENDPOINT } from 'src/configs/api'
 import { ACCESS_TOKEN, USER_DATA } from 'src/configs/auth'
@@ -22,20 +22,22 @@ interface AuthGuardProps {
 const AuthGuard = (props: AuthGuardProps) => {
   const { children, fallback } = props
   const router = useRouter()
+  const pathName = usePathname()
   const authContext = useAuth()
   const { temporaryToken } = getTemporaryToken()
 
   useEffect(() => {
     // Handle if the first render of the page is not ready yet
-    if (!router.isReady) return
+
     if (
       authContext.user === null &&
       !window.localStorage.getItem(USER_DATA) &&
       !window.localStorage.getItem(ACCESS_TOKEN) &&
       !temporaryToken
     ) {
-      if (router.asPath !== '/' && router.asPath !== '/login') {
-        router.replace({ pathname: `/login`, query: { returnUrl: router.asPath } })
+      if (pathName !== '/' && pathName !== 'en/' && pathName !== '/login' && pathName !== 'en/login') {
+        router.replace(`/login`)
+        // router.replace({ pathname: `/login`, query: { returnUrl: router.asPath } })
       } else {
         router.replace(`/login`)
       }
@@ -44,7 +46,7 @@ const AuthGuard = (props: AuthGuardProps) => {
       // Clear local storage before login
       clearLocalUserData()
     }
-  }, [router.route])
+  }, [pathName])
 
   useEffect(() => {
     // remove temporary token when reloading page
