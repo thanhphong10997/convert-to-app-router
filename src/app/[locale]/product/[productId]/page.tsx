@@ -18,7 +18,36 @@ type TProps = {
   relatedProductList: TProduct[]
 }
 
-export const Index: NextPage<TProps> = ({ productData, relatedProductList }) => {
+const getDetailsProduct = async (slugId: string) => {
+  try {
+    const res = await getDetailsProductPublicBySlug(slugId, true)
+    const productData = res?.data
+    const resRelated = await getListRelatedProductBySlug({ params: { slug: slugId } })
+    const relatedProductList = resRelated?.data
+
+    // if (!productData?._id) {
+    //   return {
+    //     notFound: true
+    //   }
+    // }
+
+    return {
+      productData: productData,
+      relatedProductList: relatedProductList
+    }
+  } catch (err) {
+    return {
+      productData: {},
+      relatedProductList: []
+    }
+  }
+}
+
+export const Index = async ({ params: { productId } }: { params: { productId: string } }) => {
+  const { productData, relatedProductList } = await getDetailsProduct(productId)
+  // const description = getTextFromHTML(productData?.description)
+  const description = ''
+
   return (
     <>
       <AuthLayoutWrapper
@@ -28,7 +57,7 @@ export const Index: NextPage<TProps> = ({ productData, relatedProductList }) => 
       >
         <Head>
           <title>{productData?.name}</title>
-          <meta name='description' content={getTextFromHTML(productData?.description)} />
+          <meta name='description' content={productData?.description} />
           <meta name='author' content='Phong cute' />
           <meta name='name' content='Shop bán hàng điện tử' />
           <meta name='image' content={productData?.image} />
@@ -36,12 +65,12 @@ export const Index: NextPage<TProps> = ({ productData, relatedProductList }) => 
           {/* custom meta for facebook */}
           <meta property='og:type' content='website' />
           <meta property='og:title' content={productData?.name} />
-          <meta property='og:description' content={getTextFromHTML(productData?.description)} />
+          <meta property='og:description' content={productData?.description} />
           <meta property='og:image' content={productData?.image} />
           {/* custom meta for twitter(X) */}
           <meta property='twitter:card' content='website' />
           <meta property='twitter:title' content={productData?.name} />
-          <meta property='twitter:description' content={getTextFromHTML(productData?.description)} />
+          <meta property='twitter:description' content={productData?.description} />
           <meta property='twitter:image' content={productData?.image} />
         </Head>
         <DetailsProductPage productDataServer={productData} relatedProductListServer={relatedProductList} />
@@ -51,34 +80,3 @@ export const Index: NextPage<TProps> = ({ productData, relatedProductList }) => 
 }
 
 export default Index
-
-export async function getServerSideProps(context: any) {
-  const slugId = context?.query?.productId
-
-  try {
-    const res = await getDetailsProductPublicBySlug(slugId, true)
-    const productData = res?.data
-    const resRelated = await getListRelatedProductBySlug({ params: { slug: slugId } })
-    const relatedProductList = resRelated?.data
-
-    if (!productData?._id) {
-      return {
-        notFound: true
-      }
-    }
-
-    return {
-      props: {
-        productData: productData,
-        relatedProductList: relatedProductList
-      }
-    }
-  } catch (err) {
-    return {
-      props: {
-        productData: {},
-        relatedProductList: []
-      }
-    }
-  }
-}

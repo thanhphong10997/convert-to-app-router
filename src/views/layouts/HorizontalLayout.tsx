@@ -19,11 +19,12 @@ import ModeToggle from '../components/mode-toggle'
 import LanguageDropdown from '../components/language-dropdown'
 import { useAuth } from 'src/hooks/useAuth'
 import { Button } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ROUTE_CONFIG } from 'src/configs/route'
 import Link from 'next/link'
 import CartProduct from '../components/cart-product'
 import NotificationDropDown from '../components/notification-dropdown'
+import { createUrlQuery } from 'src/utils'
 
 // Iconify
 // import { Icon } from '@iconify/react'
@@ -59,17 +60,16 @@ const AppBar = styled(MuiAppBar, {
 }))
 
 const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, hideMenu }) => {
+  // hooks
   const auth = useAuth()
   const router = useRouter()
   const theme = useTheme()
+  const pathName = usePathname()
 
   // handle
   const handleNavigateLogIn = () => {
-    if (router.asPath !== '/') {
-      router.replace({
-        pathname: '/login',
-        query: { returnUrl: router.asPath }
-      })
+    if (pathName !== '/') {
+      router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
     } else {
       router.replace('/login')
     }

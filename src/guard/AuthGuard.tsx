@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode, ReactElement, useEffect } from 'react'
 import { API_ENDPOINT } from 'src/configs/api'
 import { ACCESS_TOKEN, USER_DATA } from 'src/configs/auth'
+import { ROUTE_CONFIG } from 'src/configs/route'
 import {
   clearLocalRememberLoginAuthSocial,
   clearLocalUserData,
@@ -13,6 +14,7 @@ import {
   getTemporaryToken
 } from 'src/helpers/storage'
 import { useAuth } from 'src/hooks/useAuth'
+import { createUrlQuery } from 'src/utils'
 
 interface AuthGuardProps {
   children: ReactNode
@@ -36,8 +38,8 @@ const AuthGuard = (props: AuthGuardProps) => {
       !temporaryToken
     ) {
       if (pathName !== '/' && pathName !== 'en/' && pathName !== '/login' && pathName !== 'en/login') {
-        router.replace(`/login`)
-        // router.replace({ pathname: `/login`, query: { returnUrl: router.asPath } })
+        // return the nearest page after login
+        router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
       } else {
         router.replace(`/login`)
       }

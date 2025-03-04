@@ -4,7 +4,7 @@
 import { createContext, useEffect, useState, ReactNode } from 'react'
 
 // ** Next Import
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 // ** Axios
 import axios from 'axios'
@@ -64,6 +64,7 @@ const AuthProvider = ({ children }: Props) => {
   // ** Hooks
   const router = useRouter()
   const pathName = usePathname()
+  const searchParams = useSearchParams()
 
   // redux
   const dispatch: AppDispatch = useDispatch()
@@ -111,8 +112,9 @@ const AuthProvider = ({ children }: Props) => {
         } else {
           setTemporaryToken(response?.data?.access_token)
         }
-        // const returnUrl = router.query.returnUrl
-        const returnUrl = '/'
+
+        // get the returnUrl key from the search parameters
+        const returnUrl = searchParams.get('returnUrl')
 
         setUser({ ...response.data.user })
         toast.success(t('login_success'))
@@ -138,8 +140,9 @@ const AuthProvider = ({ children }: Props) => {
         } else {
           setTemporaryToken(response?.data?.access_token)
         }
-        // const returnUrl = router.query.returnUrl
-        const returnUrl = '/'
+
+        // get the returnUrl key from the search parameters
+        const returnUrl = searchParams.get('returnUrl')
 
         setUser({ ...response.data.user })
         toast.success(t('login_success'))
@@ -165,8 +168,8 @@ const AuthProvider = ({ children }: Props) => {
         } else {
           setTemporaryToken(response?.data?.access_token)
         }
-        // const returnUrl = router.query.returnUrl
-        const returnUrl = '/'
+        // get the returnUrl key from the search parameters
+        const returnUrl = searchParams.get('returnUrl')
 
         setUser({ ...response.data.user })
         toast.success(t('login_success'))
@@ -195,10 +198,6 @@ const AuthProvider = ({ children }: Props) => {
       if (!LIST_PAGE_PUBLIC?.some(item => pathName?.startsWith(item))) {
         if (pathName !== '/') {
           router.replace(ROUTE_CONFIG.LOGIN)
-          // router.replace({
-          //   pathname: ROUTE_CONFIG.LOGIN,
-          //   query: { returnUrl: router.asPath }
-          // })
         } else {
           router.replace(ROUTE_CONFIG.LOGIN)
         }

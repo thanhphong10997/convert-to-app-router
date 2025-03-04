@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next'
 import {
   cloneDeep,
   convertUpdateProductToCart,
+  createUrlQuery,
   formatFilter,
   formatNumberToLocal,
   isExpiry,
@@ -32,7 +33,7 @@ import {
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
 
 // router
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 // types
 import { TProduct } from 'src/types/product'
@@ -91,9 +92,7 @@ export const DetailsProductPage: NextPage<TProps> = ({ productDataServer, relate
 
   // router
   const router = useRouter()
-
-  // get slug from web address
-  const slug = router.query?.productId as string
+  const pathName = usePathname()
 
   // auth
   const { user } = useAuth()
@@ -248,27 +247,13 @@ export const DetailsProductPage: NextPage<TProps> = ({ productDataServer, relate
       )
       setLocalProductToCart({ ...parseData, [user?._id]: listOrderItems })
     } else {
-      router.replace({
-        pathname: '/login',
-        query: { returnUrl: router.asPath }
-      })
+      router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
     }
   }
 
   const handleBuyProductToCart = (item: TProduct) => {
     handleUpdateProductToCart(item)
-
-    // ROUTE_CONFIG.MY_CART is the custom URL so the cart page won't show the query on the router and the query data will be gone if the page reloads
-    router.push(
-      {
-        pathname: ROUTE_CONFIG.MY_CART,
-
-        query: {
-          selected: item?._id
-        }
-      },
-      ROUTE_CONFIG.MY_CART
-    )
+    router.push(`${ROUTE_CONFIG.MY_CART}?${createUrlQuery('selected', item?._id)}`)
   }
 
   const handleCancelComment = () => {}
@@ -284,10 +269,7 @@ export const DetailsProductPage: NextPage<TProps> = ({ productDataServer, relate
           })
         )
       } else {
-        router.replace({
-          pathname: ROUTE_CONFIG.LOGIN,
-          query: { returnUrl: router.asPath }
-        })
+        router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
       }
     }
   }
@@ -363,13 +345,6 @@ export const DetailsProductPage: NextPage<TProps> = ({ productDataServer, relate
       setRelatedProduct(relatedProductListServer)
     }
   }, [relatedProductListServer])
-
-  useEffect(() => {
-    if (slug) {
-      // fetchGetDetailsProduct(slug, true)
-      // fetchListRelatedProduct(slug)
-    }
-  }, [slug])
 
   useEffect(() => {
     if (dataProduct?._id) {

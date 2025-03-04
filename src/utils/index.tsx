@@ -205,3 +205,10 @@ export const getTextFromHTML = (html: string) => {
 
   return newElement.textContent || newElement.innerText
 }
+
+export const createUrlQuery = (name: string, value: string) => {
+  const params = new URLSearchParams()
+  params.set(name, value)
+
+  return params
+}

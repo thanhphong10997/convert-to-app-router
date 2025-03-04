@@ -17,9 +17,11 @@ import {
 // jwt
 import { jwtDecode } from 'jwt-decode'
 import { FC, useEffect } from 'react'
-import { NextRouter, useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { UserDataType } from 'src/contexts/types'
 import { useAuth } from 'src/hooks/useAuth'
+import { createUrlQuery } from 'src/utils'
+import { ROUTE_CONFIG } from 'src/configs/route'
 
 const instanceAxios = axios.create({ baseURL: BASE_URL })
 type TAxiosInterceptor = {
@@ -58,15 +60,14 @@ const processQueue = (error: any, token: string | null = null) => {
 }
 
 const AxiosInterceptor: FC<TAxiosInterceptor> = ({ children }) => {
+  // hooks
   const router = useRouter()
   const { user, setUser } = useAuth()
+  const pathName = usePathname()
 
-  const handleRedirectLogin = (router: NextRouter, setUser: (data: UserDataType | null) => void) => {
-    if (router.asPath !== '/' && router.asPath !== '/login') {
-      router.replace({
-        pathname: '/login',
-        query: { returnUrl: router.asPath }
-      })
+  const handleRedirectLogin = (router: any, pathName: string, setUser: (data: UserDataType | null) => void) => {
+    if (pathName !== '/' && pathName !== '/login') {
+      router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
     } else {
       router.replace('/login')
     }
@@ -117,12 +118,12 @@ const AxiosInterceptor: FC<TAxiosInterceptor> = ({ children }) => {
                         setLocalUserData(JSON.stringify(user), newAccessToken, refreshToken)
                       }
                     } else {
-                      handleRedirectLogin(router, setUser)
+                      handleRedirectLogin(router, pathName, setUser)
                     }
                   })
                   .catch(err => {
                     processQueue(err, null)
-                    handleRedirectLogin(router, setUser)
+                    handleRedirectLogin(router, pathName, setUser)
                   })
                   .finally(() => {
                     isRefreshing = false
@@ -131,14 +132,14 @@ const AxiosInterceptor: FC<TAxiosInterceptor> = ({ children }) => {
                 return await addRequestQueue(config)
               }
             } else {
-              handleRedirectLogin(router, setUser)
+              handleRedirectLogin(router, pathName, setUser)
             }
           } else {
-            handleRedirectLogin(router, setUser)
+            handleRedirectLogin(router, pathName, setUser)
           }
         }
       } else if (!isPublicApi) {
-        handleRedirectLogin(router, setUser)
+        handleRedirectLogin(router, pathName, setUser)
       }
 
       // delete params isPublic after use it so that the isPublic param won't be sent to the server

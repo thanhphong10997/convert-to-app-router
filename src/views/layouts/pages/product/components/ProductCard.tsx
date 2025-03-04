@@ -23,10 +23,10 @@ import { TProduct } from 'src/types/product'
 
 // utils
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
-import { convertUpdateProductToCart, formatNumberToLocal, isExpiry } from 'src/utils'
+import { convertUpdateProductToCart, createUrlQuery, formatNumberToLocal, isExpiry } from 'src/utils'
 
 // next
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 // configs
 import { ROUTE_CONFIG } from 'src/configs/route'
@@ -67,6 +67,7 @@ const ProductCard = (props: TProductCard) => {
   // theme
   const theme = useTheme()
   const router = useRouter()
+  const pathName = usePathname()
 
   const { user } = useAuth()
 
@@ -91,10 +92,8 @@ const ProductCard = (props: TProductCard) => {
         dispatch(likeProductAsync({ productId: id }))
       }
     } else {
-      router.replace({
-        pathname: '/login',
-        query: { returnUrl: router.asPath }
-      })
+      // return the nearest page after login
+      router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
     }
   }
 
@@ -123,10 +122,8 @@ const ProductCard = (props: TProductCard) => {
       )
       setLocalProductToCart({ ...parseData, [user?._id]: listOrderItems })
     } else {
-      router.replace({
-        pathname: '/login',
-        query: { returnUrl: router.asPath }
-      })
+      // return the nearest page after login
+      router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
     }
   }
 
@@ -134,16 +131,19 @@ const ProductCard = (props: TProductCard) => {
     handleUpdateProductToCart(item)
 
     // ROUTE_CONFIG.MY_CART is the custom URL so the cart page won't show the query on the router and the query data will be gone if the page reloads
-    router.push(
-      {
-        pathname: ROUTE_CONFIG.MY_CART,
+    // router.push(
+    //   {
+    //     pathname: ROUTE_CONFIG.MY_CART,
 
-        query: {
-          selected: item?._id
-        }
-      },
-      ROUTE_CONFIG.MY_CART
-    )
+    //     query: {
+    //       selected: item?._id
+    //     }
+    //   },
+    //   ROUTE_CONFIG.MY_CART
+    // )
+
+    // return the nearest page after login
+    router.push(`${ROUTE_CONFIG.MY_CART}?${createUrlQuery('selected', item?._id)}`)
   }
 
   return (

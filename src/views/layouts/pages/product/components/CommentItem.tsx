@@ -3,7 +3,7 @@
 import { Avatar, Box, Button, IconButton, Popover, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toFullName } from 'src/utils'
+import { createUrlQuery, toFullName } from 'src/utils'
 import { getPastTime } from 'src/utils/date'
 import CommentInput from './CommentInput'
 import { TCommentItemProduct } from 'src/types/comment'
@@ -11,7 +11,7 @@ import { useAuth } from 'src/hooks/useAuth'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from 'src/stores'
 import { deleteMyCommentAsync, replyCommentAsync, updateMyCommentAsync } from 'src/stores/comments/actions'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ROUTE_CONFIG } from 'src/configs/route'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import ConfirmationDialog from 'src/components/confirmation-dialog'
@@ -29,6 +29,7 @@ const CommentItem = ({ item }: TProps) => {
 
   // router
   const router = useRouter()
+  const pathName = usePathname()
 
   // redux
   const {
@@ -86,10 +87,7 @@ const CommentItem = ({ item }: TProps) => {
         }
         setIsReply(false)
       } else {
-        router.replace({
-          pathname: ROUTE_CONFIG.LOGIN,
-          query: { returnUrl: router.asPath }
-        })
+        router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
       }
     }
   }

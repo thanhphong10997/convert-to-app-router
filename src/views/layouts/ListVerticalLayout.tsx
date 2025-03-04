@@ -17,7 +17,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 import { TVertical, VerticalItems } from 'src/configs/layout'
 import { NextPage } from 'next'
 import { Box, IconButton, styled, Tooltip, useTheme } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
 import { PERMISSIONS } from 'src/configs/permission'
 import { useAuth } from 'src/hooks/useAuth'
@@ -208,10 +208,12 @@ const RecursiveListItems: NextPage<TListItems> = ({
 export const ListVerticalLayout: NextPage<TProps> = ({ drawerIsOpening }) => {
   const [openItems, setOpenItems] = React.useState<{ [key: string]: boolean }>({})
   const [activePath, setActivePath] = React.useState<null | string>('')
-  const router = useRouter()
+
+  // hooks
+  const pathName = usePathname()
+  const { user } = useAuth()
 
   // permission
-  const { user } = useAuth()
   const permissionUser = user?.role?.permissions
     ? user?.role?.permissions.includes(PERMISSIONS.BASIC)
       ? [PERMISSIONS.DASHBOARD]
@@ -279,16 +281,16 @@ export const ListVerticalLayout: NextPage<TProps> = ({ drawerIsOpening }) => {
 
   // handle to open the item menu depends on the router address when the page loads
   React.useEffect(() => {
-    if (router.asPath) {
-      const parentTitle = findParentActivePath(memoFormatMenu, router.asPath)
-      setActivePath(router.asPath)
+    if (pathName) {
+      const parentTitle = findParentActivePath(memoFormatMenu, pathName)
+      setActivePath(pathName)
       if (parentTitle) {
         setOpenItems({
           [parentTitle]: true
         })
       }
     }
-  }, [router.asPath])
+  }, [pathName])
 
   return (
     <List
