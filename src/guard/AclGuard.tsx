@@ -13,6 +13,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { AbilityContext } from 'src/components/acl/Can'
 import { PERMISSIONS } from 'src/configs/permission'
 import { ROUTE_CONFIG } from 'src/configs/route'
+import i18nConfig from 'src/app/i18nConfig'
+import { useTranslation } from 'react-i18next'
 
 interface AclGuardProps {
   children: ReactNode
@@ -28,6 +30,8 @@ const AclGuard = (props: AclGuardProps) => {
   const auth = useAuth()
   const router = useRouter()
   const pathName = usePathname()
+  const { i18n } = useTranslation()
+  const currentLang = i18n.language
 
   const permissionUser = auth?.user?.role?.permissions
     ? auth?.user?.role?.permissions.includes(PERMISSIONS.BASIC)
@@ -36,7 +40,8 @@ const AclGuard = (props: AclGuardProps) => {
     : []
   useEffect(() => {
     // redirect the router to the home page because every page including auth-guard or guest-guard will goes through here
-    if (pathName === '/' || pathName === 'en/') {
+    const url = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
+    if (pathName === url) {
       router.push(ROUTE_CONFIG.HOME)
     }
   }, [pathName])
@@ -46,15 +51,11 @@ const AclGuard = (props: AclGuardProps) => {
     ability = buildAbilityFor(permissionUser, permission)
   }
 
+  const url500 = currentLang === i18nConfig.defaultLocale ? '/500' : `/${currentLang}/500`
+  const url404 = currentLang === i18nConfig.defaultLocale ? '/404' : `/${currentLang}/404`
+
   // if guest guard or no guard or error pages
-  if (
-    guestGuard ||
-    pathName === '/500' ||
-    pathName === 'en/500' ||
-    pathName === '/404' ||
-    pathName === 'en/404' ||
-    !authGuard
-  ) {
+  if (guestGuard || pathName === url500 || pathName === url404 || !authGuard) {
     if (auth.user && ability) {
       return <AbilityContext.Provider value={ability}>{children}</AbilityContext.Provider>
     } else {

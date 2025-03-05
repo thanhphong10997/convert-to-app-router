@@ -37,6 +37,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateProductToCart } from 'src/stores/order-product'
 import { ROUTE_CONFIG } from 'src/configs/route'
 import { signOut } from 'next-auth/react'
+import i18nConfig from 'src/app/i18nConfig'
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
@@ -65,12 +66,12 @@ const AuthProvider = ({ children }: Props) => {
   const router = useRouter()
   const pathName = usePathname()
   const searchParams = useSearchParams()
+  // translate
+  const { t, i18n } = useTranslation()
+  const currentLang = i18n.language
 
   // redux
   const dispatch: AppDispatch = useDispatch()
-
-  // translate
-  const { t } = useTranslation()
 
   useEffect(() => {
     const initAuth = async (): Promise<void> => {
@@ -192,15 +193,15 @@ const AuthProvider = ({ children }: Props) => {
       clearLocalRememberLoginAuthSocial()
 
       // sign out google account
-      // signOut()
+      signOut()
 
       // check if the page is not public then redirect to the login page
-      if (!LIST_PAGE_PUBLIC?.some(item => pathName?.startsWith(item))) {
-        if (pathName !== '/') {
-          router.replace(ROUTE_CONFIG.LOGIN)
-        } else {
-          router.replace(ROUTE_CONFIG.LOGIN)
-        }
+      if (
+        !LIST_PAGE_PUBLIC?.some(item =>
+          pathName?.startsWith(currentLang === i18nConfig.defaultLocale ? item : `/${currentLang}/${item}`)
+        )
+      ) {
+        router.replace(ROUTE_CONFIG.LOGIN)
       }
 
       // reset the items in the cart when the user is logged out

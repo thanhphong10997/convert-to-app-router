@@ -45,10 +45,12 @@ export default async function initTranslations(
 export const LANGUAGE_OPTIONS = [
   {
     lang: 'English',
-    value: 'en'
+    value: 'en',
+    icon: 'circle-flags:lang-en'
   },
   {
     lang: 'Tiếng Việt',
-    value: 'vi'
+    value: 'vi',
+    icon: 'circle-flags:lang-vi'
   }
 ]

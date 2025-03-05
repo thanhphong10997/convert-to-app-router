@@ -4,6 +4,8 @@
 // ** React Imports
 import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode, ReactElement, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import i18nConfig from 'src/app/i18nConfig'
 import { API_ENDPOINT } from 'src/configs/api'
 import { ACCESS_TOKEN, USER_DATA } from 'src/configs/auth'
 import { ROUTE_CONFIG } from 'src/configs/route'
@@ -23,10 +25,16 @@ interface AuthGuardProps {
 
 const AuthGuard = (props: AuthGuardProps) => {
   const { children, fallback } = props
+  // hooks
   const router = useRouter()
-  const pathName = usePathname()
   const authContext = useAuth()
   const { temporaryToken } = getTemporaryToken()
+  const { i18n } = useTranslation()
+  const pathName = usePathname()
+  const currentLang = i18n.language
+
+  const defaultUrl = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
+  const loginUrl = currentLang === i18nConfig.defaultLocale ? '/login' : `/${currentLang}/login`
 
   useEffect(() => {
     // Handle if the first render of the page is not ready yet
@@ -37,11 +45,11 @@ const AuthGuard = (props: AuthGuardProps) => {
       !window.localStorage.getItem(ACCESS_TOKEN) &&
       !temporaryToken
     ) {
-      if (pathName !== '/' && pathName !== 'en/' && pathName !== '/login' && pathName !== 'en/login') {
+      if (pathName !== defaultUrl && pathName !== loginUrl) {
         // return the nearest page after login
         router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
       } else {
-        router.replace(`/login`)
+        router.replace(ROUTE_CONFIG.LOGIN)
       }
       authContext.setUser(null)
 

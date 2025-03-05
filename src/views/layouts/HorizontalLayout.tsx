@@ -25,6 +25,8 @@ import Link from 'next/link'
 import CartProduct from '../components/cart-product'
 import NotificationDropDown from '../components/notification-dropdown'
 import { createUrlQuery } from 'src/utils'
+import i18nConfig from 'src/app/i18nConfig'
+import { useTranslation } from 'react-i18next'
 
 // Iconify
 // import { Icon } from '@iconify/react'
@@ -65,13 +67,17 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, hideMenu }) =>
   const router = useRouter()
   const theme = useTheme()
   const pathName = usePathname()
+  const { i18n } = useTranslation()
+  const currentLang = i18n.language
+
+  const defaultUrl = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
 
   // handle
   const handleNavigateLogIn = () => {
-    if (pathName !== '/') {
+    if (pathName !== defaultUrl) {
       router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
     } else {
-      router.replace('/login')
+      router.replace(ROUTE_CONFIG.LOGIN)
     }
   }
 
