@@ -11,17 +11,6 @@ interface TOptions {
   label: string
   value: string
 }
-interface TProps {
-  products: TProduct[]
-  totalCount: number
-  productTypes: TOptions[]
-  params: {
-    limit: number
-    page: number
-    order: string
-    productType: string
-  }
-}
 
 const getProductData = async () => {
   const limit = 10,
@@ -69,7 +58,7 @@ const getProductData = async () => {
   }
 }
 
-export default async function Home(props: TProps) {
+export default async function Home() {
   const { products, totalCount, params, productTypes } = await getProductData()
 
   return (
@@ -92,4 +81,4 @@ export default async function Home(props: TProps) {
   )
 }
 
-Home.title = 'Product list page, contains all products of the store'
+// Home.title = 'Product list page, contains all products of the store'

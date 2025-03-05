@@ -39,7 +39,7 @@ import { createOrderProductAsync } from 'src/stores/order-product/actions'
 
 // components
 import NoData from 'src/components/no-data'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 // services
 import { getAllPaymentTypes } from 'src/services/payment-type'
@@ -73,6 +73,7 @@ export const CheckoutProductPage: NextPage<TProps> = () => {
 
   // router
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   // react
   const [loading, setLoading] = useState(false)
@@ -135,14 +136,15 @@ export const CheckoutProductPage: NextPage<TProps> = () => {
       totalPrice: 0,
       selectedProduct: []
     }
-    const data: any = router.query
-    if (data) {
-      result.totalPrice = data?.totalPrice || 0
-      result.selectedProduct = data.productSelected ? handleFormatProductData(JSON.parse(data.productSelected)) : []
+    const productSelected = searchParams.get('productSelected')
+    const totalPrice = searchParams.get('totalPrice')
+    if (productSelected && totalPrice) {
+      result.totalPrice = totalPrice ? +totalPrice : 0
+      result.selectedProduct = productSelected ? handleFormatProductData(JSON.parse(productSelected)) : []
     }
 
     return result
-  }, [router.query, orderItems])
+  }, [searchParams, orderItems])
 
   // handle
   const onChangeDelivery = (value: string) => {
@@ -370,11 +372,11 @@ export const CheckoutProductPage: NextPage<TProps> = () => {
   }, [isSuccessCreate, isErrorCreate, messageCreate])
 
   useEffect(() => {
-    const data: any = router.query
-    if (!data?.productSelected) {
+    const productSelected = searchParams.get('productSelected')
+    if (!productSelected) {
       setOpenWarning(true)
     }
-  }, [router.query])
+  }, [searchParams])
 
   return (
     <>

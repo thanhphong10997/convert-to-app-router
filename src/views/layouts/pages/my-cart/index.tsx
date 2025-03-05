@@ -27,7 +27,7 @@ import { useTranslation } from 'react-i18next'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 // utils
-import { cloneDeep, convertUpdateProductToCart, formatNumberToLocal } from 'src/utils'
+import { cloneDeep, convertUpdateProductToCart, createUrlQuery, formatNumberToLocal } from 'src/utils'
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
 
 // hooks
@@ -42,7 +42,7 @@ import { updateProductToCart } from 'src/stores/order-product'
 // helpers
 import { getLocalProductCart, setLocalProductToCart } from 'src/helpers/storage'
 import NoData from 'src/components/no-data'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ROUTE_CONFIG } from 'src/configs/route'
 import ItemCartProduct from './components/ItemCartProduct'
 import { isFulfilled } from '@reduxjs/toolkit'
@@ -61,6 +61,7 @@ export const MyCartPage: NextPage<TProps> = () => {
 
   // router
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   // react
   const [loading, setLoading] = useState(false)
@@ -146,18 +147,15 @@ export const MyCartPage: NextPage<TProps> = () => {
     const formatData = JSON.stringify(
       memoItemSelectedProduct?.map(item => ({ product: item?.product?._id, amount: item?.amount }))
     )
-    router.push({
-      pathname: ROUTE_CONFIG.CHECKOUT_PRODUCT,
-      query: {
-        totalPrice: memoTotalSelectedProduct,
-        productSelected: formatData
-      }
-    })
+
+    router.push(
+      `${ROUTE_CONFIG.CHECKOUT_PRODUCT}?${createUrlQuery('totalPrice', String(memoTotalSelectedProduct))}&${createUrlQuery('productSelected', formatData)}`
+    )
   }
 
   // side Effects
   useEffect(() => {
-    const selectedProduct: any = router?.query?.selected
+    const selectedProduct = searchParams.get('selected')
     if (selectedProduct) {
       if (typeof selectedProduct === 'string') {
         setSelectedRows([selectedProduct])
@@ -165,7 +163,7 @@ export const MyCartPage: NextPage<TProps> = () => {
         setSelectedRows([...selectedProduct])
       }
     }
-  }, [router.query])
+  }, [searchParams])
 
   return (
     <>

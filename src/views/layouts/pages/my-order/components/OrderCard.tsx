@@ -13,7 +13,13 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 // utils
-import { convertUpdateMultipleCartProduct, convertUpdateProductToCart, formatNumberToLocal, isExpiry } from 'src/utils'
+import {
+  convertUpdateMultipleCartProduct,
+  convertUpdateProductToCart,
+  createUrlQuery,
+  formatNumberToLocal,
+  isExpiry
+} from 'src/utils'
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
 
 //  redux
@@ -92,16 +98,12 @@ export const OrderCard: NextPage<TProps> = props => {
     handleUpdateProductToCart(dataOrder?.orderItems)
 
     // ROUTE_CONFIG.MY_CART is the custom URL so the cart page won't show the query on the router and the query data will be gone if the page reloads
+
     router.push(
-      {
-        pathname: ROUTE_CONFIG.MY_CART,
-
-        query: {
-          selected: dataOrder?.orderItems?.map((item: TItemOrderProduct) => item?.product?._id)
-        }
-      },
-
-      ROUTE_CONFIG.MY_CART
+      `${ROUTE_CONFIG.MY_CART}?${createUrlQuery(
+        'selected',
+        dataOrder?.orderItems?.map((item: TItemOrderProduct) => item?.product?._id)
+      )}`
     )
   }
 

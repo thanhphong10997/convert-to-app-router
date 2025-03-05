@@ -2,7 +2,7 @@
 
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Box, Button, Card, Typography, useTheme } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Spinner from 'src/components/spinner'
@@ -16,9 +16,11 @@ const PaymentVNPay = () => {
   // hooks
   const theme = useTheme()
   const router = useRouter()
-
+  const searchParams = useSearchParams()
   // get the query params from vnpay after payment
-  const { vnp_SecureHash, vnp_ResponseCode, vnp_TxnRef, ...rests } = router?.query
+  const vnp_SecureHash = searchParams.get('vnp_SecureHash')
+  const vnp_ResponseCode = searchParams.get('vnp_ResponseCode')
+  const vnp_TxnRef = searchParams.get('vnp_TxnRef')
 
   // state
   const [paymentData, setPaymentData] = useState({
@@ -44,7 +46,7 @@ const PaymentVNPay = () => {
 
   useEffect(() => {
     if (vnp_SecureHash && vnp_ResponseCode && vnp_TxnRef) {
-      fetchGetIpnVNPay({ vnp_SecureHash, vnp_ResponseCode, orderId: vnp_TxnRef, vnp_TxnRef, ...rests })
+      fetchGetIpnVNPay({ vnp_SecureHash, vnp_ResponseCode, orderId: vnp_TxnRef, vnp_TxnRef })
     }
   }, [vnp_SecureHash, vnp_ResponseCode, vnp_TxnRef])
 

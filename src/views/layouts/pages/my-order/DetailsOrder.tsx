@@ -2,7 +2,7 @@
 
 // Import Next
 import { NextPage } from 'next'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 // Import Mui
 import { Box, useTheme, Typography, Divider, Avatar, Button } from '@mui/material'
@@ -31,7 +31,7 @@ import { TItemOrderProduct, TItemOrderProductMe } from 'src/types/order-product'
 import toast from 'react-hot-toast'
 
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { convertUpdateMultipleCartProduct, formatNumberToLocal } from 'src/utils'
+import { convertUpdateMultipleCartProduct, createUrlQuery, formatNumberToLocal } from 'src/utils'
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
 import { getDetailsOrderProductsByMe } from 'src/services/order-product'
 import { ROUTE_CONFIG } from 'src/configs/route'
@@ -60,7 +60,8 @@ export const MyDetailsOrderPage: NextPage<TProps> = () => {
 
   // router
   const router = useRouter()
-  const orderId = router?.query?.orderId as string
+  const searchParams = useSearchParams()
+  const orderId = searchParams.get('orderId') as string
 
   // react
   const [loading, setLoading] = useState(false)
@@ -113,16 +114,12 @@ export const MyDetailsOrderPage: NextPage<TProps> = () => {
     handleUpdateProductToCart(dataOrder?.orderItems)
 
     // ROUTE_CONFIG.MY_CART is the custom URL so the cart page won't show the query on the router and the query data will be gone if the page reloads
+
     router.push(
-      {
-        pathname: ROUTE_CONFIG.MY_CART,
-
-        query: {
-          selected: dataOrder?.orderItems?.map((item: TItemOrderProduct) => item?.product?._id)
-        }
-      },
-
-      ROUTE_CONFIG.MY_CART
+      `${ROUTE_CONFIG.CHECKOUT_PRODUCT}?${createUrlQuery(
+        'selected',
+        dataOrder?.orderItems?.map((item: TItemOrderProduct) => item?.product?._id)
+      )}`
     )
   }
 
