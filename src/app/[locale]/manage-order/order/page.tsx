@@ -8,7 +8,7 @@ import OrderProductListPage from 'src/views/layouts/pages/manage-order/order-pro
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper permission={[PERMISSIONS.MANAGE_ORDER.ORDER.VIEW]}>
       <OrderProductListPage />

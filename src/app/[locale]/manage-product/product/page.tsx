@@ -10,7 +10,7 @@ import ProductListPage from 'src/views/layouts/pages/manage-product/product/Prod
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper permission={[PERMISSIONS.MANAGE_PRODUCT.PRODUCT.VIEW]}>
       <ProductListPage />

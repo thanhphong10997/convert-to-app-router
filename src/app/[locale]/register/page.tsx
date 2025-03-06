@@ -11,7 +11,7 @@ import RegisterPage from 'src/views/layouts/pages/register'
 
 type TProps = {}
 
-export const Register: NextPage<TProps> = () => {
+const Register: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper guestGuard={true} getLayout={(page: ReactNode) => <BlankLayout>{page}</BlankLayout>}>
       <RegisterPage />

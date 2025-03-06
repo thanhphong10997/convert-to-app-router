@@ -17,6 +17,7 @@ const PaymentVNPay = () => {
   const theme = useTheme()
   const router = useRouter()
   const searchParams = useSearchParams()
+
   // get the query params from vnpay after payment
   const vnp_SecureHash = searchParams.get('vnp_SecureHash')
   const vnp_ResponseCode = searchParams.get('vnp_ResponseCode')

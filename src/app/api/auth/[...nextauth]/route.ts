@@ -9,6 +9,7 @@ const handler = NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_SECRET as string,
       name: 'google',
+
       // allow select multiple accounts
       authorization: {
         params: {
@@ -30,7 +31,6 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, account }: any) {
       // Persist the OAuth access_token to the token right after signin
-
       if (account && account.provider) {
         token.provider = account.provider
       }

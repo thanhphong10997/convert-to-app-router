@@ -10,7 +10,7 @@ import ProductTypeListPage from 'src/views/layouts/pages/manage-product/product-
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper>
       <ProductTypeListPage />

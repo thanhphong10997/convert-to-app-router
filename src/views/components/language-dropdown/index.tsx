@@ -57,6 +57,7 @@ export default function LanguageDropdown() {
 
   const handleChangeLanguage = (lang: string) => {
     console.log(currentLang === i18nConfig.defaultLocale)
+
     // the language is english (is not the default language)
     if (currentLang === i18nConfig.defaultLocale) {
       console.log('pass')

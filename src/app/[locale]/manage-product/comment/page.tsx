@@ -5,7 +5,7 @@ import CommentListPage from 'src/views/layouts/pages/manage-product/comment/Comm
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper>
       <CommentListPage />

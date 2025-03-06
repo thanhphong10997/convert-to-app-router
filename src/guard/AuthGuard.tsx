@@ -25,6 +25,7 @@ interface AuthGuardProps {
 
 const AuthGuard = (props: AuthGuardProps) => {
   const { children, fallback } = props
+
   // hooks
   const router = useRouter()
   const authContext = useAuth()
@@ -47,6 +48,7 @@ const AuthGuard = (props: AuthGuardProps) => {
     ) {
       if (pathName !== defaultUrl && pathName !== loginUrl) {
         // return the nearest page after login
+
         router.replace(`${ROUTE_CONFIG.LOGIN}?${createUrlQuery('returnUrl', pathName)}`)
       } else {
         router.replace(ROUTE_CONFIG.LOGIN)
@@ -60,6 +62,7 @@ const AuthGuard = (props: AuthGuardProps) => {
 
   useEffect(() => {
     // remove temporary token when reloading page
+
     const handleUnload = () => {
       clearTemporaryToken()
 

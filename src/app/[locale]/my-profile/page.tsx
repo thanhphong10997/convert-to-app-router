@@ -11,7 +11,7 @@ import MyProfilePage from 'src/views/layouts/pages/my-profile'
 
 type TProps = {}
 
-export const Profile: NextPage<TProps> = () => {
+const Profile: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper getLayout={(page: ReactNode) => <LayoutNotApp>{page}</LayoutNotApp>}>
       <MyProfilePage />

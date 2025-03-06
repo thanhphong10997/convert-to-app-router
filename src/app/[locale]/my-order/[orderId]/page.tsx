@@ -11,7 +11,7 @@ import MyDetailsOrderPage from 'src/views/layouts/pages/my-order/DetailsOrder'
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper getLayout={(page: ReactNode) => <LayoutNotApp>{page}</LayoutNotApp>}>
       <MyDetailsOrderPage />

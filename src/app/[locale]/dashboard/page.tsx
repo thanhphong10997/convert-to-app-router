@@ -6,7 +6,7 @@ import DashboardPage from 'src/views/layouts/pages/dashboard'
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper permission={[PERMISSIONS.DASHBOARD]}>
       <DashboardPage />

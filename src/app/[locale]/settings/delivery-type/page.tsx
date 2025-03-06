@@ -10,7 +10,7 @@ import DeliveryTypeListPage from 'src/views/layouts/pages/settings/delivery-type
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper>
       <DeliveryTypeListPage />

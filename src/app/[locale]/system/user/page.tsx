@@ -10,7 +10,7 @@ import UserListPage from 'src/views/layouts/pages/system/user/UserList'
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper permission={[PERMISSIONS.SYSTEM.USER.VIEW]}>
       <UserListPage />

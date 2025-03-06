@@ -11,12 +11,11 @@ import CheckoutProductPage from 'src/views/layouts/pages/checkout-product'
 
 type TProps = {}
 
-export const Profile: NextPage<TProps> = () => {
+const Profile: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper getLayout={(page: ReactNode) => <LayoutNotApp>{page}</LayoutNotApp>}>
       <CheckoutProductPage />
     </AuthLayoutWrapper>
   )
 }
-
 export default Profile

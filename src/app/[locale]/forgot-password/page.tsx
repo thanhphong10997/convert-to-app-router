@@ -11,7 +11,7 @@ import ForgotPasswordPage from 'src/views/layouts/pages/forgot-password'
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper guestGuard={true} getLayout={(page: ReactNode) => <BlankLayout>{page}</BlankLayout>}>
       {' '}

@@ -46,28 +46,6 @@ type Inputs = {
   confirmNewPassword: string
 }
 
-const useStyles = makeStyles((theme: any) => {
-  return {
-    paper: {
-      marginTop: '32px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    },
-    avatar: {
-      margin: '4px',
-      backgroundColor: '#333'
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: '4px'
-    },
-    submit: {
-      margin: '8px'
-    }
-  }
-})
-
 export const ChangePasswordPage: NextPage<TProps> = () => {
   // theme
   const theme = useTheme()

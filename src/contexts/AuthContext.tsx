@@ -66,6 +66,7 @@ const AuthProvider = ({ children }: Props) => {
   const router = useRouter()
   const pathName = usePathname()
   const searchParams = useSearchParams()
+
   // translate
   const { t, i18n } = useTranslation()
   const currentLang = i18n.language
@@ -162,6 +163,7 @@ const AuthProvider = ({ children }: Props) => {
   const handleLoginFacebook = (params: LoginFacebookParams, errorCallback?: ErrCallbackType) => {
     // axios
     //   .post(authConfig.loginEndpoint, params)
+
     loginAuthFacebook({ idToken: params?.tokenId, deviceToken: params.deviceToken })
       .then(async response => {
         if (params.rememberMe) {
@@ -169,6 +171,7 @@ const AuthProvider = ({ children }: Props) => {
         } else {
           setTemporaryToken(response?.data?.access_token)
         }
+
         // get the returnUrl key from the search parameters
         const returnUrl = searchParams.get('returnUrl')
 

@@ -6,7 +6,7 @@ import PaymentTypeListPage from 'src/views/layouts/pages/settings/payment-type/P
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper>
       <PaymentTypeListPage />

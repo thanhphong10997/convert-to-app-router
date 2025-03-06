@@ -11,7 +11,7 @@ import PaymentVNPay from 'src/views/layouts/pages/payment/vnpay'
 
 type TProps = {}
 
-export const Index: NextPage<TProps> = () => {
+const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper getLayout={(page: ReactNode) => <BlankLayout>{page}</BlankLayout>}>
       <PaymentVNPay />

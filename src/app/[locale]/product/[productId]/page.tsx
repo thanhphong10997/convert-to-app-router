@@ -43,8 +43,9 @@ const getDetailsProduct = async (slugId: string) => {
   }
 }
 
-export const Index = async ({ params: { productId } }: { params: { productId: string } }) => {
+const Index = async ({ params: { productId } }: { params: { productId: string } }) => {
   const { productData, relatedProductList } = await getDetailsProduct(productId)
+
   // const description = getTextFromHTML(productData?.description)
   const description = ''
 
