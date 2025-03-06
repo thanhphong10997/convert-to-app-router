@@ -106,4 +106,4 @@ export const dynamic = 'force-static'
 //  update the static page after 10s
 export const revalidate = 10
 
-export const maxDuration = 300
+export const maxDuration = 60
