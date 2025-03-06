@@ -1,7 +1,7 @@
 import { createInstance, i18n } from 'i18next'
 import { initReactI18next } from 'react-i18next/initReactI18next'
 import resourcesToBackend from 'i18next-resources-to-backend'
-import i18nConfig from '~/app/i18nConfig'
+import i18nConfig from 'src/app/i18nConfig'
 
 export default async function initTranslations(
   locale: string,
@@ -41,3 +41,16 @@ export default async function initTranslations(
     t: i18nInstance.t
   }
 }
+
+export const LANGUAGE_OPTIONS = [
+  {
+    lang: 'English',
+    value: 'en',
+    icon: 'circle-flags:lang-en'
+  },
+  {
+    lang: 'Tiếng Việt',
+    value: 'vi',
+    icon: 'circle-flags:lang-vi'
+  }
+]
