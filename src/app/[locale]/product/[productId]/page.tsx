@@ -18,18 +18,43 @@ type TProps = {
   relatedProductList: TProduct[]
 }
 
+export const generateMetadata = async ({ params: { slugId } }: { params: { slugId: string } }) => {
+  const res = await getDetailsProductPublicBySlug(slugId)
+  const productData = res?.data
+
+  return {
+    title: `Ecommerce-shop - ${productData?.name}`,
+    description: productData?.description,
+    keywords: `Ecommerce-shop - ${productData?.name} - ${productData?.slug}`,
+    openGraph: {
+      images: productData?.image,
+      title: `Ecommerce-shop - ${productData?.name}`,
+      description: productData?.description,
+      type: 'website',
+      url: `https://convert-to-app-router-nextjs.vercel.app/product/${productData?.slug}`
+    },
+    twitter: {
+      images: productData?.image,
+      title: `Ecommerce-shop - ${productData?.name}`,
+      description: productData?.description,
+      type: 'website',
+      url: `https://convert-to-app-router-nextjs.vercel.app/product/${productData?.slug}`
+    }
+  }
+}
+
 const getDetailsProduct = async (slugId: string) => {
   try {
     const res = await getDetailsProductPublicBySlug(slugId, true)
     const productData = res?.data
     const resRelated = await getListRelatedProductBySlug({ params: { slug: slugId } })
-    const relatedProductList = resRelated?.data
+    const relatedProductList = resRelated?.data?.products
 
-    // if (!productData?._id) {
-    //   return {
-    //     notFound: true
-    //   }
-    // }
+    if (!productData?._id) {
+      return {
+        notFound: true
+      }
+    }
 
     return {
       productData: productData,
@@ -81,3 +106,6 @@ const Index = async ({ params: { productId } }: { params: { productId: string } 
 }
 
 export default Index
+
+export const dynamic = 'force-dynamic'
+export const maxDuration = 60

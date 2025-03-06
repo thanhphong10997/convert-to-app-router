@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Head from 'next/head'
 import { ReactNode, useEffect } from 'react'
 import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
@@ -10,6 +11,22 @@ import HomePage from 'src/views/layouts/pages/home'
 interface TOptions {
   label: string
   value: string
+}
+
+export const metadata: Metadata = {
+  title: `Ecommerce-NextJS - Danh sách sản phẩm`,
+  description: 'Bán hàng điện tử, điện thoại, laptop, máy tính bảng',
+  keywords: `ReactJS, NextJS, Typescript`,
+  openGraph: {
+    title: `Ecommerce-NextJS - Danh sách sản phẩm`,
+    description: 'Bán hàng điện tử, điện thoại, laptop, máy tính bảng',
+    type: 'website',
+    url: `https://convert-to-app-router-nextjs.vercel.app/home`
+  },
+  twitter: {
+    title: `Ecommerce-NextJS - Danh sách sản phẩm`,
+    description: 'Bán hàng điện tử, điện thoại, laptop, máy tính bảng'
+  }
 }
 
 const getProductData = async () => {
@@ -82,3 +99,11 @@ export default async function Home() {
 }
 
 // Home.title = 'Product list page, contains all products of the store'
+
+// render static page, similar to getStaticProps in page router
+export const dynamic = 'force-static'
+
+//  update the static page after 10s
+export const revalidate = 10
+
+export const maxDuration = 60
