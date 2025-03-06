@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Head from 'next/head'
 import { ReactNode, useEffect } from 'react'
 import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
@@ -12,7 +13,7 @@ interface TOptions {
   value: string
 }
 
-export const generateMetadata = {
+export const metadata: Metadata = {
   title: `Ecommerce-NextJS - Danh sách sản phẩm`,
   description: 'Bán hàng điện tử, điện thoại, laptop, máy tính bảng',
   keywords: `ReactJS, NextJS, Typescript`,
@@ -24,9 +25,7 @@ export const generateMetadata = {
   },
   twitter: {
     title: `Ecommerce-NextJS - Danh sách sản phẩm`,
-    description: 'Bán hàng điện tử, điện thoại, laptop, máy tính bảng',
-    type: 'website',
-    url: `https://convert-to-app-router-nextjs.vercel.app/home`
+    description: 'Bán hàng điện tử, điện thoại, laptop, máy tính bảng'
   }
 }
 
