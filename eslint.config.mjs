@@ -26,8 +26,8 @@ const eslintConfig = [
       'lines-around-comment': [
         'error',
         {
-          beforeLineComment: true,
-          beforeBlockComment: true,
+          beforeLineComment: false,
+          beforeBlockComment: false,
           allowBlockStart: true,
           allowClassStart: true,
           allowObjectStart: true,
