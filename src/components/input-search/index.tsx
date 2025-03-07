@@ -23,7 +23,7 @@ const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.background.paper,
-  border: `1px solid ${theme.palette.customColors.borderColor}`,
+  border: `1px solid ${theme.palette.customColors?.borderColor}`,
   marginLeft: 0,
   width: '100%',
   height: '38px',
