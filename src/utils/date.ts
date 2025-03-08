@@ -29,3 +29,7 @@ export const formatDate = (
 
   return new Intl.DateTimeFormat('vi-VN', formatting).format(new Date(value))
 }
+
+export const sum = (a: number, b: number) => {
+  return a + b
+}
